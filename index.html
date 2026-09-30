@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DANI — Join the Waitlist</title>
+<meta name="description" content="DANI — Digital Artificial Neural Intelligence. She codes. She chats. She imagines. She talks. Join the waitlist and hear her voice first.">
+<link rel="icon" type="image/png" href="assets/dani-logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --cream:#FFF6EE;
+  --peach:#FFDDC7;
+  --peach-deep:#FFC9A8;
+  --coral:#E8664C;
+  --coral-dark:#D4502F;
+  --rose:#C44569;
+  --gold:#C9A86A;
+  --ink:#3B2620;
+  --ink-soft:#7A5F52;
+  --card:#FFFFFF;
+  --line:rgba(196,69,105,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* soft peach glows */
+.glow{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;}
+.glow.one{width:420px;height:420px;background:var(--peach-deep);opacity:.55;top:-120px;right:-100px;}
+.glow.two{width:360px;height:360px;background:var(--rose);opacity:.10;bottom:-80px;left:-120px;}
+.glow.three{width:260px;height:260px;background:var(--gold);opacity:.12;top:40%;left:60%;}
+
+/* ===== SCREENS ===== */
+.screen{display:none;min-height:100vh;position:relative;z-index:1;}
+.screen.active{display:block;animation:screenIn .55s ease both;}
+@keyframes screenIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+.wrap{max-width:560px;margin:0 auto;padding:0 24px;}
+
+/* ===== LANDING ===== */
+#landing{display:none;}
+#landing.active{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:56px 24px 44px;}
+
+.logo-tile{
+  width:96px;height:96px;border-radius:26px;
+  background:#13102B;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 18px 40px -10px rgba(196,69,105,.45), 0 0 0 1px rgba(201,168,106,.25);
+  margin-bottom:28px;
+  animation:floatTile 5s ease-in-out infinite;
+}
+.logo-tile img{width:58px;height:58px;border-radius:12px;}
+@keyframes floatTile{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+.eyebrow{
+  font-size:.72rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--rose);font-weight:700;margin-bottom:14px;
+}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,10vw,4.4rem);
+  font-weight:800;line-height:1;color:var(--ink);
+}
+h1 .accent{color:var(--coral);font-style:italic;}
+.full{
+  font-size:.8rem;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--ink-soft);margin-top:14px;font-weight:600;
+}
+.lede{
+  max-width:430px;margin:22px auto 0;color:var(--ink-soft);
+  font-size:1.02rem;line-height:1.75;
+}
+.lede strong{color:var(--ink);}
+
+.features{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+  max-width:520px;width:100%;margin:38px auto 0;
+}
+.feat{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  padding:18px 16px;text-align:left;
+  box-shadow:0 6px 20px -12px rgba(196,69,105,.18);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.feat:hover{transform:translateY(-3px);box-shadow:0 14px 28px -14px rgba(196,69,105,.35);}
+.feat .f-ico{
+  width:34px;height:34px;border-radius:10px;background:var(--peach);
+  display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+}
+.feat .f-ico svg{width:17px;height:17px;stroke:var(--coral);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.feat h3{font-family:'Playfair Display',serif;font-size:1.02rem;font-weight:700;margin-bottom:5px;}
+.feat p{font-size:.8rem;color:var(--ink-soft);line-height:1.5;}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Inter',sans-serif;font-weight:600;font-size:.95rem;
+  padding:16px 36px;border-radius:50px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--coral),var(--rose));
+  color:#fff;box-shadow:0 14px 32px -10px rgba(196,69,105,.55);
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 20px 42px -12px rgba(196,69,105,.7);}
+.btn:active{transform:scale(.97);}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+
+.join-zone{margin-top:40px;}
+.join-note{margin-top:16px;font-size:.78rem;color:var(--ink-soft);}
+.join-note em{color:var(--coral);font-style:normal;font-weight:600;}
+
+/* ===== JOIN (email) ===== */
+#join{display:none;}
+#join.active{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 24px;text-align:center;}
+.join-card{
+  width:100%;max-width:440px;background:var(--card);
+  border:1px solid var(--line);border-radius:28px;
+  padding:44px 34px 38px;
+  box-shadow:0 30px 70px -30px rgba(196,69,105,.4);
+}
+.join-card .mini-logo{width:58px;height:58px;border-radius:16px;background:#13102B;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.join-card .mini-logo img{width:34px;height:34px;border-radius:8px;}
+.join-card h2{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:800;margin-bottom:8px;}
+.join-card .sub{font-size:.9rem;color:var(--ink-soft);line-height:1.6;margin-bottom:26px;}
+.field{position:relative;margin-bottom:14px;}
+.field input{
+  width:100%;padding:17px 20px;border-radius:16px;
+  border:1.5px solid var(--line);background:var(--cream);
+  font-family:'Inter',sans-serif;font-size:1rem;color:var(--ink);
+  outline:none;transition:border .2s ease, box-shadow .2s ease;
+}
+.field input:focus{border-color:var(--coral);box-shadow:0 0 0 4px rgba(232,102,76,.14);}
+.field input.err{border-color:#D32F2F;box-shadow:0 0 0 4px rgba(211,47,47,.12);}
+.err-msg{color:#D32F2F;font-size:.78rem;margin-top:8px;min-height:1em;}
+.wave-hint{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-bottom:22px;font-size:.75rem;color:var(--ink-soft);
+}
+.eq{display:inline-flex;gap:2.5px;align-items:flex-end;height:16px;}
+.eq i{width:3px;background:var(--coral);border-radius:2px;animation:eq 1s ease-in-out infinite;}
+.eq i:nth-child(1){height:7px;animation-delay:0s;}
+.eq i:nth-child(2){height:13px;animation-delay:.15s;}
+.eq i:nth-child(3){height:9px;animation-delay:.3s;}
+.eq i:nth-child(4){height:14px;animation-delay:.45s;}
+.eq i:nth-child(5){height:6px;animation-delay:.6s;}
+@keyframes eq{0%,100%{transform:scaleY(.4);}50%{transform:scaleY(1);}}
+#join .btn{width:100%;}
+#join .btn svg{width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+.back-link{margin-top:22px;font-size:.8rem;color:var(--ink-soft);cursor:pointer;text-decoration:underline;}
+.back-link:hover{color:var(--rose);}
+
+/* ===== LOADING ===== */
+#loading{display:none;}
+#loading.active{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.load-ring{position:relative;width:130px;height:130px;margin-bottom:34px;}
+.load-ring .tile{
+  position:absolute;inset:0;border-radius:32px;background:#13102B;
+  display:flex;align-items:center;justify-content:center;
+  animation:pulseTile 1.6s ease-in-out infinite;
+}
+.load-ring .tile img{width:56px;height:56px;border-radius:12px;}
+@keyframes pulseTile{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(232,102,76,.35);}50%{transform:scale(1.06);box-shadow:0 0 0 26px rgba(232,102,76,0);}}
+.load-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;font-style:italic;}
+.load-sub{margin-top:10px;font-size:.82rem;color:var(--ink-soft);}
+.load-dots{display:flex;gap:8px;justify-content:center;margin-top:26px;}
+.load-dots i{width:9px;height:9px;border-radius:50%;background:var(--coral);animation:dotBounce 1.2s ease-in-out infinite;}
+.load-dots i:nth-child(2){animation-delay:.15s;}
+.load-dots i:nth-child(3){animation-delay:.3s;}
+@keyframes dotBounce{0%,100%{transform:translateY(0);opacity:.5;}50%{transform:translateY(-9px);opacity:1;}}
+
+/* ===== SUCCESS ===== */
+#success{display:none;}
+#success.active{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:56px 24px;}
+.check-wrap{width:110px;height:110px;margin-bottom:28px;}
+.check-wrap circle{fill:none;stroke:var(--coral);stroke-width:4;stroke-dasharray:290;stroke-dashoffset:290;animation:draw .8s ease forwards;}
+.check-wrap path{fill:none;stroke:var(--rose);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .5s ease .6s forwards;}
+@keyframes draw{to{stroke-dashoffset:0;}}
+#success h2{font-family:'Playfair Display',serif;font-size:2.3rem;font-weight:800;}
+#success h2 em{color:var(--coral);font-style:italic;}
+#success .sub{margin:16px 0 34px;color:var(--ink-soft);line-height:1.7;max-width:380px;font-size:.95rem;}
+.success-card{
+  background:var(--card);border:1px solid var(--line);border-radius:22px;
+  padding:22px 28px;margin-bottom:34px;max-width:380px;
+  box-shadow:0 10px 30px -18px rgba(196,69,105,.35);
+}
+.success-card .lbl{font-size:.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-soft);font-weight:700;}
+.success-card .val{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-top:6px;word-break:break-all;}
+
+/* ===== CHAT ===== */
+#chat{display:none;}
+#chat.active{display:flex;flex-direction:column;height:100vh;}
+.chat-head{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 22px;border-bottom:1px solid var(--line);
+  background:rgba(255,246,238,.92);backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:5;
+}
+.chat-head .avatar{width:44px;height:44px;border-radius:14px;background:#13102B;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chat-head .avatar img{width:26px;height:26px;border-radius:7px;}
+.chat-head .meta h4{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:800;}
+.chat-head .meta span{font-size:.72rem;color:var(--coral);font-weight:600;display:flex;align-items:center;gap:6px;}
+.chat-head .meta .live{width:7px;height:7px;border-radius:50%;background:var(--coral);animation:blink 1.4s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+.chat-body{flex:1;overflow-y:auto;padding:26px 22px;display:flex;flex-direction:column;gap:16px;}
+.msg{display:flex;gap:10px;max-width:86%;animation:msgIn .45s ease both;}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+.msg .m-avatar{width:34px;height:34px;border-radius:11px;background:#13102B;display:flex;align-items:center;justify-content:center;flex-shrink:0;align-self:flex-end;margin-bottom:2px;}
+.msg .m-avatar img{width:20px;height:20px;border-radius:6px;}
+.bubble{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:20px 20px 20px 6px;padding:14px 18px;
+  box-shadow:0 8px 22px -14px rgba(196,69,105,.3);
+}
+.bubble .b-label{font-size:.66rem;letter-spacing:1.8px;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:10px;}
+.player{display:flex;align-items:center;gap:12px;}
+.play-btn{
+  width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;flex-shrink:0;
+  background:linear-gradient(135deg,var(--coral),var(--rose));color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .2s ease;
+}
+.play-btn:active{transform:scale(.92);}
+.play-btn svg{width:15px;height:15px;fill:#fff;}
+.bars{display:flex;align-items:center;gap:3px;height:26px;cursor:pointer;}
+.bars i{width:3px;border-radius:2px;background:var(--peach-deep);transition:.2s;}
+.bars i.on{background:var(--coral);}
+.bars.playing i{background:var(--coral);animation:eq .9s ease-in-out infinite;}
+.bars i:nth-child(odd){height:12px;}
+.bars i:nth-child(3n){height:20px;}
+.bars i:nth-child(4n){height:8px;}
+.bars i:nth-child(2n){height:16px;}
+.typing .bubble{display:flex;gap:5px;align-items:center;padding:18px 20px;}
+.typing .t-dot{width:8px;height:8px;border-radius:50%;background:var(--peach-deep);animation:tdot 1.2s infinite;}
+.typing .t-dot:nth-child(2){animation-delay:.18s;}
+.typing .t-dot:nth-child(3){animation-delay:.36s;}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-6px);opacity:1;}}
+.chat-end{
+  text-align:center;font-size:.75rem;color:var(--ink-soft);
+  padding:18px;border-top:1px solid var(--line);
+}
+.chat-end a{color:var(--rose);font-weight:600;text-decoration:underline;cursor:pointer;}
+
+/* ===== FOOTER ===== */
+.site-foot{
+  text-align:center;padding:26px 20px 34px;border-top:1px solid var(--line);
+  font-size:.75rem;color:var(--ink-soft);
+}
+.site-foot .dcs{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px;}
+.site-foot .dcs img{width:18px;height:18px;border-radius:5px;}
+.site-foot .dcs span{font-weight:700;color:var(--ink);letter-spacing:.5px;}
+
+@media(max-width:420px){
+  .features{grid-template-columns:1fr 1fr;gap:10px;}
+  .feat{padding:15px 13px;border-radius:15px;}
+  .feat h3{font-size:.92rem;}
+  .feat p{font-size:.73rem;}
+  .logo-tile{width:84px;height:84px;border-radius:22px;}
+  .logo-tile img{width:50px;height:50px;}
+}
+</style>
+</head>
+<body>
+
+<div class="glow one"></div>
+<div class="glow two"></div>
+<div class="glow three"></div>
+
+<!-- ============ SCREEN 1: LANDING ============ -->
+<section id="landing" class="screen active">
+  <div class="logo-tile"><img src="assets/dani-logo.png" alt="DANI logo"></div>
+  <div class="eyebrow">Digital Artificial Neural Intelligence</div>
+  <h1>Meet <span class="accent">DANI.</span></h1>
+  <div class="full">By Daminicodesphere</div>
+  <p class="lede">She codes. She chats like a friend. She imagines anything you ask — <strong>and she talks.</strong> Join the waitlist and hear her voice before anyone else.</p>
+
+  <div class="features">
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></div>
+      <h3>She codes</h3>
+      <p>Full apps, fixes and reviews. A senior dev in your pocket.</p>
+    </div>
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg></div>
+      <h3>Friendly chat</h3>
+      <p>Warm, human conversation. Never robotic, always present.</p>
+    </div>
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <h3>Screenshots</h3>
+      <p>Show her anything on your screen. She understands it.</p>
+    </div>
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><circle cx="8" cy="9" r="1.6"/><path d="m2 17 5-4 4 3 4-5 7 6"/></svg></div>
+      <h3>Screen recording</h3>
+      <p>She watches your screen move, and knows what to do.</p>
+    </div>
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.6L20 10l-5 4 1.5 6-4.5-3.4L7.5 20 9 14 4 10l6.1-1.4z"/></svg></div>
+      <h3>DANI Imagine</h3>
+      <p>Realistic images from plain words. Our own image system.</p>
+    </div>
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+      <h3>Image editing</h3>
+      <p>Send a picture, tell her what to change. Done.</p>
+    </div>
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg></div>
+      <h3>She talks</h3>
+      <p>A real voice with real warmth. She speaks, you listen.</p>
+    </div>
+    <div class="feat">
+      <div class="f-ico"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 4.5L19.5 9l-3.5 3.5.8 5-4.8-2.6L7.2 17.5l.8-5L4.5 9l5-1.5z"/><path d="M17 17l4 4M21 17l-4 4"/></svg></div>
+      <h3>Special features</h3>
+      <p>The rest, she'll tell you herself. You'll see in the AI.</p>
+    </div>
+  </div>
+
+  <div class="join-zone">
+    <button class="btn" id="joinBtn" onclick="startJoin()">
+      <svg class="icon" style="width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><path d="M12 3v10m0 0 4-4m-4 4L8 9M5 21h14"/></svg>
+      Join the Waitlist
+    </button>
+    <p class="join-note">Tap to join — <em>DANI will say hi first.</em></p>
+  </div>
+
+  <div class="site-foot" style="border-top:none;padding-top:44px;">
+    <div class="dcs"><img src="assets/dcs-logo.png" alt="Daminicodesphere"><span>Daminicodesphere</span></div>
+    Software &amp; AI Development Lab · © 2026
+  </div>
+</section>
+
+<!-- ============ SCREEN 2: EMAIL ============ -->
+<section id="join" class="screen">
+  <div class="join-card">
+    <div class="mini-logo"><img src="assets/dani-logo.png" alt="DANI"></div>
+    <h2>Save your spot</h2>
+    <p class="sub">DANI just spoke — that was her voice. Leave your email and she'll remember you were one of the first.</p>
+    <div class="wave-hint"><span class="eq"><i></i><i></i><i></i><i></i><i></i></span> her voice is playing</div>
+    <div class="field">
+      <input type="email" id="emailInput" placeholder="you@email.com" autocomplete="email" spellcheck="false">
+      <div class="err-msg" id="emailErr"></div>
+    </div>
+    <button class="btn" id="submitBtn" onclick="submitEmail()">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+      Continue
+    </button>
+    <div class="back-link" onclick="showScreen('landing')">← back</div>
+  </div>
+</section>
+
+<!-- ============ SCREEN 3: LOADING ============ -->
+<section id="loading" class="screen">
+  <div class="load-ring">
+    <div class="tile"><img src="assets/dani-logo.png" alt="DANI"></div>
+  </div>
+  <div class="load-text">Saving your spot…</div>
+  <div class="load-sub">DANI is writing your name down</div>
+  <div class="load-dots"><i></i><i></i><i></i></div>
+</section>
+
+<!-- ============ SCREEN 4: SUCCESS ============ -->
+<section id="success" class="screen">
+  <svg class="check-wrap" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45"/>
+    <path d="M30 52l13 13 27-30"/>
+  </svg>
+  <h2>You're <em>in.</em></h2>
+  <p class="sub">Your spot on the waitlist is saved. DANI is waiting on the other side — and she has something to say to you.</p>
+  <div class="success-card">
+    <div class="lbl">On the list as</div>
+    <div class="val" id="successEmail">—</div>
+  </div>
+  <button class="btn" onclick="enterChat()">
+    <svg class="icon" style="width:16px;height:16px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 21l1.9-5.4A8 8 0 1 1 21 12z"/></svg>
+    Talk to DANI
+  </button>
+  <p class="join-note" style="margin-top:16px;">One-time chat · voice only</p>
+</section>
+
+<!-- ============ SCREEN 5: ONE-TIME CHAT ============ -->
+<section id="chat" class="screen">
+  <div class="chat-head">
+    <div class="avatar"><img src="assets/dani-logo.png" alt="DANI"></div>
+    <div class="meta">
+      <h4>DANI</h4>
+      <span><span class="live"></span> here with you — one time only</span>
+    </div>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-end">This was your one-time chat with DANI. She'll talk to you properly at launch. <a href="https://daminicodesphere.org" target="_blank">Daminicodesphere</a></div>
+</section>
+
+<script>
+/* ================= CONFIG ================= */
+// DANI voice messages — the sequence she sends in the one-time chat.
+// The real voice WAV lands at assets/voice/dani-intro.wav (replaces the placeholder).
+const DANI_MESSAGES = [
+  { src: 'assets/voice/dani-intro.wav', label: 'Voice note' },
+];
+const INTRO_SRC = 'assets/voice/dani-intro.wav';
+const API_URL = 'https://superagent-00d5cd6a.base44.app/functions/daniWaitlist';
+
+const $ = id => document.getElementById(id);
+const daniVoice = new Audio();
+
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(name).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ================= JOIN FLOW ================= */
+function startJoin(){
+  // her voice greets them the moment they tap join
+  daniVoice.src = INTRO_SRC;
+  daniVoice.play().catch(()=>{});
+  showScreen('join');
+  setTimeout(()=> $('emailInput').focus(), 450);
+}
+
+async function submitEmail(){
+  const input = $('emailInput');
+  const err = $('emailErr');
+  const email = input.value.trim().toLowerCase();
+
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){
+    input.classList.add('err');
+    err.textContent = 'Please enter a valid email — DANI wants to reach you.';
+    return;
+  }
+  input.classList.remove('err');
+  err.textContent = '';
+
+  $('submitBtn').disabled = true;
+  showScreen('loading');
+
+  try{
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+
+    if(!data.ok) throw new Error(data.error || 'failed');
+
+    // let the loading screen breathe for a moment
+    await new Promise(r => setTimeout(r, 1600));
+
+    $('successEmail').textContent = email;
+    showScreen('success');
+  }catch(e){
+    $('submitBtn').disabled = false;
+    showScreen('join');
+    input.classList.add('err');
+    err.textContent = 'Something went wrong — please try again.';
+  }
+}
+
+/* ================= ONE-TIME CHAT ================= */
+function enterChat(){
+  showScreen('chat');
+  runDaniChat();
+}
+
+function addTyping(){
+  const el = document.createElement('div');
+  el.className = 'msg typing';
+  el.id = 'typingMsg';
+  el.innerHTML = `
+    <div class="m-avatar"><img src="assets/dani-logo.png" alt=""></div>
+    <div class="bubble"><span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span></div>`;
+  $('chatBody').appendChild(el);
+  scrollChat();
+}
+
+function addVoiceMsg(msg, isLast){
+  if($('typingMsg')) $('chatBody').removeChild($('typingMsg'));
+  const audioId = 'dani-audio-' + Date.now();
+  const el = document.createElement('div');
+  el.className = 'msg';
+  el.innerHTML = `
+    <div class="m-avatar"><img src="assets/dani-logo.png" alt=""></div>
+    <div class="bubble">
+      <div class="b-label">${msg.label || 'Voice note'}</div>
+      <div class="player">
+        <button class="play-btn" onclick="playVoice('${audioId}')" aria-label="Play voice note">
+          <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </button>
+        <div class="bars" onclick="playVoice('${audioId}')">
+          ${'<i></i>'.repeat(22)}
+        </div>
+      </div>
+      <audio id="${audioId}" src="${msg.src}" preload="auto"></audio>
+    </div>`;
+  $('chatBody').appendChild(el);
+  scrollChat();
+
+  // auto-play her message — she's speaking to them, not waiting
+  const audio = $(audioId);
+  audio.play().catch(()=>{});
+  const bars = el.querySelector('.bars');
+  bars.classList.add('playing');
+  audio.onended = () => bars.classList.remove('playing');
+
+  if(isLast){
+    // one-time chat is used
+    try{ localStorage.setItem('dani_chat_used', '1'); }catch(e){}
+  }
+}
+
+function playVoice(audioId){
+  const audio = $(audioId);
+  const bubble = audio.closest('.bubble');
+  const bars = bubble.querySelector('.bars');
+  document.querySelectorAll('audio').forEach(a => {
+    if(a !== audio){ a.pause(); }
+    const b = a.closest('.bubble');
+    if(b){ const bb = b.querySelector('.bars'); if(bb) bb.classList.remove('playing'); }
+  });
+  if(audio.paused){
+    audio.play().catch(()=>{});
+    bars.classList.add('playing');
+  }else{
+    audio.pause();
+    bars.classList.remove('playing');
+  }
+}
+
+function scrollChat(){
+  const body = $('chatBody');
+  setTimeout(()=> body.scrollTo({ top: body.scrollHeight, behavior: 'smooth' }), 60);
+}
+
+async function runDaniChat(){
+  let wasUsed = false;
+  try{ wasUsed = localStorage.getItem('dani_chat_used') === '1'; }catch(e){}
+
+  if(wasUsed){
+    $('chatBody').innerHTML = '';
+    addTyping();
+    setTimeout(()=>{
+      if($('typingMsg')) $('chatBody').removeChild($('typingMsg'));
+      const el = document.createElement('div');
+      el.className = 'msg';
+      el.innerHTML = `
+        <div class="m-avatar"><img src="assets/dani-logo.png" alt=""></div>
+        <div class="bubble">
+          <div class="b-label">Voice note</div>
+          <div class="player">
+            <button class="play-btn" onclick="playVoice('dani-replay')" aria-label="Play voice note">
+              <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg>
+            </button>
+            <div class="bars" onclick="playVoice('dani-replay')">${'<i></i>'.repeat(22)}</div>
+          </div>
+          <audio id="dani-replay" src="${INTRO_SRC}" preload="auto"></audio>
+        </div>`;
+      $('chatBody').appendChild(el);
+      document.querySelector('.chat-end').innerHTML = 'Your one-time chat with DANI has been used — but she left you her voice. She\'ll talk to you properly at launch. <a href="https://daminicodesphere.org" target="_blank">Daminicodesphere</a>';
+      scrollChat();
+    }, 1400);
+    return;
+  }
+
+  for(let i = 0; i < DANI_MESSAGES.length; i++){
+    addTyping();
+    await new Promise(r => setTimeout(r, i === 0 ? 1200 : 2200));
+    await new Promise(resolve => {
+      addVoiceMsg(DANI_MESSAGES[i], i === DANI_MESSAGES.length - 1);
+      const a = $('chatBody').querySelector('audio:last-of-type');
+      if(!a) return resolve();
+      a.onended = resolve;
+      // safety cap in case autoplay was blocked by the browser
+      setTimeout(resolve, 12000);
+    });
+  }
+}
+
+window.addEventListener('load', ()=>{
+  // pre-load her voice so it plays instantly on tap
+  daniVoice.src = INTRO_SRC;
+  daniVoice.load();
+});
+</script>
+
+</body>
+</html>
